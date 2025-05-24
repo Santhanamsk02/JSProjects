@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JavaScript-31</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      .cap {
+        color: rgba(35, 33, 50, 0.571);
+      }
+
+      body {
+        margin: 0;
+        font: normal 75% Arial, Helvetica, sans-serif;
+      }
+      canvas {
+        display: block;
+        vertical-align: bottom;
+      }
+      #particles-js {
+        position: absolute;
+        height: 100vh;
+        width:100vw;
+        z-index: -1;
+        background-color: #2c2e43;
+        background-image: url("");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50% 50%;
+      }
+      .count-particles {
+        background: #000022;
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 80px;
+        color: #13e8e9;
+        font-size: 0.8em;
+        text-align: left;
+        text-indent: 4px;
+        line-height: 14px;
+        padding-bottom: 2px;
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: bold;
+      }
+      .js-count-particles {
+        font-size: 1.1em;
+      }
+      #stats,
+      .count-particles {
+        -webkit-user-select: none;
+        margin-top: 5px;
+        margin-left: 5px;
+      }
+      #stats {
+        border-radius: 3px 3px 0 0;
+        overflow: hidden;
+      }
+      .count-particles {
+        border-radius: 0 0 3px 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <div
+        class="container d-flex justify-content-center align-items-center"
+        style="height: 100vh"
+      >
+    <div id="particles-js" style="position: absolute;"></div>
+
+        <div
+          class="row d-flex flex-column row-gap-4 rounded-3 p-5"
+          style="
+            background-color: rgba(4, 223, 247, 0.92);
+            box-shadow: 7px 7px 10px 7px rgba(0, 0, 0, 0.502);
+          "
+        >
+          <div class="col-12 d-flex column-gap-5">
+            <div
+              style="width: 300px; border: 1px solid red"
+              class="rounded-3 position-relative"
+            >
+              <img
+                src="Images/captcha.png"
+                class="img img-fluid"
+                style="width: 100%; height: 50px"
+              />
+              <div
+                class="position-absolute fs-1 fw-bold ms-4 cap"
+                style="
+                  letter-spacing: 24px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                "
+              >
+                P Q R S T U
+              </div>
+            </div>
+            <button class="btn btn-primary rounded-3">
+              <i class="bi bi-arrow-counterclockwise fs-5 fw-bold"></i>
+            </button>
+          </div>
+          <div class="col-12 my-2">
+            <input
+              class="form-control border border-3"
+              placeholder="Enter Captcha"
+            />
+          </div>
+          <div class="col-12 d-flex justify-content-center mb-3">
+            <button class="btn btn-primary px-5">Submit Captcha</button>
+          </div>
+          <div class="col-12 mt-2 rytu d-none">
+            <div class="fs-5 text-center text-success fw-semibold">
+              <i class="bi bi-check-circle"></i> Verified...You Are Not Robot
+            </div>
+          </div>
+          <div class="col-12 mt-2 wrong d-none">
+            <div class="fs-5 text-center text-danger fw-semibold">
+              <i class="bi bi-x-circle"></i> Wrong Response...Please Try Again
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib -->
+    <script>
+      let cap = document.querySelector(".cap");
+      let btn = document.querySelector("button");
+      let rytu = document.querySelector(".rytu");
+      let wrong = document.querySelector(".wrong");
+      let str;
+      function rand(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
+      function getcaptcha() {
+        str = "";
+        for (i = 0; i < 2; i++) {
+          let c1 = String.fromCharCode(rand(97, 122));
+          str += c1;
+          let c2 = String.fromCharCode(rand(65, 90));
+          str += c2;
+          let c3 = String.fromCharCode(rand(48, 57));
+          str += c3;
+        }
+        console.log(str);
+        cap.innerHTML = str;
+        wrong.classList.add("d-none");
+        rytu.classList.add("d-none");
+      }
+      getcaptcha();
+      btn.addEventListener("click", getcaptcha);
+      let btn2 = document.querySelectorAll("button")[1];
+      let input = document.querySelector("input");
+      btn2.addEventListener("click", () => {
+        let str2 = input.value;
+        if (str == str2) {
+          rytu.classList.remove("d-none");
+          wrong.classList.add("d-none");
+        } else {
+          rytu.classList.add("d-none");
+          wrong.classList.remove("d-none");
+        }
+      });
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 2, density: { enable: true, value_area: 800 } },
+          color: { value: "#f2f4fc" },
+          shape: {
+            type: "circle",
+            stroke: { width: 5, color: "#ededf4" },
+            polygon: { nb_sides: 5 },
+            image: { src: "img/github.svg", width: 100, height: 100 },
+          },
+          opacity: {
+            value: 0.1839264294282288,
+            random: true,
+            anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false },
+          },
+          size: {
+            value: 79.96801279488209,
+            random: false,
+            anim: { enable: true, speed: 10, size_min: 40, sync: false },
+          },
+          line_linked: {
+            enable: false,
+            distance: 200,
+            color: "#ffffff",
+            opacity: 1,
+            width: 2,
+          },
+          move: {
+            enable: true,
+            speed: 7.996801279488208,
+            direction: "top",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+            attract: {
+              enable: true,
+              rotateX: 3198.720511795283,
+              rotateY: 1200,
+            },
+          },
+        },
+        interactivity: {
+          detect_on: "window",
+          events: {
+            onhover: { enable: true, mode: "repulse" },
+            onclick: { enable: true, mode: "push" },
+            resize: true,
+          },
+          modes: {
+            grab: { distance: 400, line_linked: { opacity: 1 } },
+            bubble: {
+              distance: 400,
+              size: 40,
+              duration: 2,
+              opacity: 8,
+              speed: 3,
+            },
+            repulse: { distance: 200, duration: 0.4 },
+            push: { particles_nb: 4 },
+            remove: { particles_nb: 2 },
+          },
+        },
+        retina_detect: true,
+      });
+    </script>
+    <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+ 
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

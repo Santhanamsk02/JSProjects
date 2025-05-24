@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>JavaScript-28</title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <style>
+            *
+            {
+                padding: 0 !important;
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    </head>
+
+    <body>
+      
+        <main>
+            <div class="container-fluid d-flex justify-content-center align-items-center" style="height:100vh;background-color:rgba(0, 136, 255, 0.516)">
+                <div class="row bg-light p-4 rounded-4 column-gap-0 row-gap-0 g-0" style="width:600px;box-shadow:10px 10px 7px 1px rgba(0, 0, 0, 0.511)">
+                    <div class="col-6 m-0" style="margin-bottom: -10px;">
+                        <textarea class="w-100 p-2 m-0" style="height:230px;" placeholder="Enter Text"></textarea>
+                        <div class="border border-black m-0 d-flex justify-content-evenly" style="position:relative;top:-7px">
+                            <i class="bi bi-volume-up-fill text-light-emphasis fs-4 speak"></i>
+                            <i class="bi bi-clipboard-fill text-light-emphasis fs-4 copy"></i>
+                            <div class="d-flex ">
+                                <select class=" form-select px-3 py-1">
+                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 m-0">
+                        <textarea class="w-100 p-2 m-0" style="height:230px;" placeholder="Translation" readonly></textarea>
+                        <div class="border border-black m-0 d-flex justify-content-evenly" style="position:relative;top:-7px">
+                            <div class="d-flex ">
+                                <select class=" form-select px-3 py-1">
+                                    
+                                </select>
+                            </div>
+                            <i class="bi bi-volume-up-fill text-light-emphasis fs-4 speak"></i>
+                            <i class="bi bi-clipboard-fill text-light-emphasis fs-4 copy"></i>
+                        </div>
+                    </div>
+                        <button class="btn btn-primary py-2 rounded-3 mt-3">Translate Text</button>
+                </div>
+            </div>
+        </main>
+        <script>
+            let selects=document.querySelectorAll("select");
+            let text=document.querySelectorAll("textarea")
+            fetch('countries.js').then((res)=>res.json())
+            .then((data)=>{
+                for(let i in data)
+                {
+                   let option=document.createElement("option")
+                   option.innerHTML=data[i];
+                   if(data[i]=='English')
+                   {
+                    option.selected=true;
+                   }
+                   option.value=i;
+                   selects[0].append(option) 
+                }
+                for(let i in data)
+                {
+                   let option=document.createElement("option")
+                   option.innerHTML=data[i]
+                   option.value=i;
+                   if(data[i]=='Tamil')
+                   {
+                    option.selected=true;
+                   }
+                   selects[1].append(option) 
+                }
+            })
+            let btn=document.querySelector("button")
+            btn.addEventListener("click",()=>
+            {
+                let data=text[0].value;
+                let from=selects[0].value;
+                let to=selects[1].value;
+                text[1].value=""
+                fetch(`https://api.mymemory.translated.net/get?q=${data}&langpair=${from}|${to}`).then(res=>res.json())
+                .then((data)=>{text[1].value=data.responseData.translatedText})
+
+                text[1].placeholder="Translating..."
+            })
+            let copy=document.querySelectorAll(".copy");
+            copy[0].addEventListener("click",()=>{
+                navigator.clipboard.writeText(text[0].value)
+            })
+            copy[1].addEventListener("click",()=>{
+                navigator.clipboard.writeText(text[1].value)
+            })
+            let speak=document.querySelectorAll(".speak")
+            speak[0].addEventListener("click",()=>{
+                synth=window.speechSynthesis;
+                let utterance=new SpeechSynthesisUtterance(text[0].value);
+                utterance.lang=selects[0].value;
+                synth.speak(utterance);
+            })
+            speak[1].addEventListener("click",()=>{
+                synth=window.speechSynthesis;
+                let utterance=new SpeechSynthesisUtterance(text[1].value);
+                utterance.lang=selects[1].value;
+                synth.speak(utterance);
+                console.log("varala")
+            })
+        </script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>JavaScript-7</title>
+        
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lobster&family=MuseoModerno:ital,wght@0,100..900;1,100..900&family=Oleo+Script:wght@400;700&family=Yuji+Mai&display=swap" rel="stylesheet">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <style>
+            body
+            {
+                background-image: url(Images/NewYear_bg.jpg);
+                background-position: center;
+                background-size: cover;    
+            }
+            #txt
+            {
+                font-family: "Dancing Script", serif;
+                font-optical-sizing: auto;
+                font-size: 6.5rem;
+                font-weight: 900;
+                font-style: normal;
+            }
+            *
+            {
+                color: white;
+            }
+            .fs-4
+            {
+                margin-bottom: -100px;
+            }
+        </style>
+    </head>
+
+    <body style="height: 100vh;" class="d-flex justify-content-center align-items-center">
+       
+        <main>
+            <div class="row mt-4">
+                <div class="col-12 text-light fs-4 text-center fw-medium">Countdown to</div>
+                <div class="col-12 text-light display-1 fw-bolder text-center" id="txt">new year</div>
+                <div class="col-12 d-flex justify-content-evenly">
+                    <div><p class="text-center fs-1 fw-semibold" id="day">00</p><p class="text-center fw-semibold fs-5">Days</p></div>
+                    <div><p class="text-center fs-1 fw-semibold" id="hour">00</p><p class="text-center fw-semibold fs-5">Hours</p></div>
+                    <div><p class="text-center fs-1 fw-semibold" id="min">00</p><p class="text-center fw-semibold fs-5">Minutes</p></div>
+                    <div><p class="text-center fs-1 fw-semibold" id="sec">00</p><p class="text-center fw-semibold fs-5">Seconds</p></div>
+                </div>
+            </div>
+
+        </main>
+        
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            let day=document.getElementById("day")
+            let hour=document.getElementById("hour")
+            let min=document.getElementById("min")
+            let sec=document.getElementById("sec")
+            setInterval(()=>{
+                let cyear=new Date().getFullYear();
+                let nyear=new Date(`January 1 ${cyear+1} 00:00:00`)
+                let cdate=new Date();
+                let diff=nyear-cdate;
+                let d=Math.floor(diff/1000/60/60/24)
+                let h=Math.floor((diff/1000/60/60)%24)
+                let m=Math.floor((diff/1000/60)%60)
+                let s=Math.floor((diff/1000)%60)
+                day.innerHTML=d<10?"0"+d:d;
+                hour.innerHTML=h<10?"0"+h:h;
+                min.innerHTML=m<10?"0"+m:m;
+                sec.innerHTML=s<10?"0"+s:s;
+            },1000);
+            
+        </script>
+    </body>
+</html>

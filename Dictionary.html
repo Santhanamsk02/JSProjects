@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>JavaScript-29</title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <style>
+            .form-control:focus
+            {
+                box-shadow: none !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        
+        <main>
+            <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+                <div class="row">
+                    <div class="col-6 border border-4 d-flex flex-column rounded-4 p-3" style="width: 500px;">
+                        <div class="d-flex column-gap-5 my-4 ms-4">
+                            <input class=" form-control border-bottom border-0" placeholder="Enter Text...">
+                            <button class="btn btn-primary px-4">Search</button>
+                        </div>
+                        <div class="main d-none">
+                            <div class="d-flex  justify-content-between align-items-center">
+                                <div class="ms-4 fs-1 fw-semibold mean">Meaning</div>
+                                <div><i class="bi bi-volume-up-fill me-4 fs-1 text-primary speak"></i></div>
+                            </div>
+                            <span class="fs-6 fw-normal ms-4"><span class="noun">noun/</span><span class="phonetic">fromword</span></span>
+                            <div class="ms-4 my-4 fs-5 explain">Explaination</div>
+                            <div class="ms-4 border-start border-5 ps-3 fs-5 border-primary mb-3 exam">Example</div>
+                        </div>
+                        <div class="fs-4 text-center d-none nf">Not Found !...Sorry 😔</div>
+                        
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script>
+            let btn=document.querySelector("button")
+            let inp=document.querySelector("input")
+            let main=document.querySelector(".main")
+            let mean=main.querySelector(".mean")
+            let noun=main.querySelector(".noun")
+            let ph=main.querySelector(".phonetic")
+            let ex=main.querySelector(".explain")
+            let exam=main.querySelector(".exam")
+            let nf=document.querySelector(".nf")
+            let speak=document.querySelector(".speak")
+            let def;
+            
+            btn.addEventListener("click",async ()=>{
+                btn.innerHTML="searching"
+                try
+                {
+                    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inp.value}`).then(res=>res.json())
+                    .then((data)=>{
+                    console.log(data[0]);
+                    let ex=main.querySelector(".explain")
+                    def=data[0].meanings[0]?.synonyms[0] || inp.value;
+                    mean.innerHTML=data[0].meanings[0]?.synonyms[0] || inp.value;
+                    noun.innerHTML=data[0].meanings[0].partOfSpeech
+                    ph.innerHTML=data[0].phonetics[0].text;
+                    ex.innerHTML=data[0].meanings[0].definitions[0].definition;
+                    let meanin=data[0].meanings;
+                    exam.innerHTML=data[0].meanings[meanin.length-1].definitions[0].example
+                    }).catch((er)=>{
+                        console.log("error")
+                        main.classList.add("d-none")
+                        nf.classList.remove("d-none")
+                    })
+                }
+                catch
+                {
+                   
+                }
+                btn.innerHTML="search"
+                main.classList.remove("d-none")
+                nf.classList.add("d-none")
+            })
+            speak.addEventListener("click",()=>{
+                let synth=window.speechSynthesis;
+                let utterance=new SpeechSynthesisUtterance(def);
+                synth.speak(utterance);
+            })
+        </script>
+        
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

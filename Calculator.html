@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>JavaScript-4</title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <style>
+            body
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background: #096DF8;
+                background: linear-gradient(315deg, #096DF8, #3CDDFD);
+            }
+            .frame
+            {
+                box-shadow: 10px 10px 156px 8px rgba(0,0,0,0.69);
+                height: 75vh;
+                width:350px;
+               background: #13ABCA;
+                background: linear-gradient(315deg, #ffffff6c, #739cf47e);
+                backdrop-filter: blur(20px);
+            }
+            input
+            {
+                height: 97px;
+                padding: none !important;
+                cursor: none;
+                border: no;
+                caret-color: transparent;
+            }
+            input:focus ,input:target
+            {
+                outline: none !important;
+                border: none !important;
+            }
+            #first
+            {
+                margin-left: -30px;
+            }
+            #first button
+            {
+                border-radius: 17px;
+                width: 60px;
+                padding-block: 10px;
+                border: 3px solid white;
+                color: rgb(2, 124, 255);
+            }
+            button:hover
+            {
+                background: linear-gradient(145deg, #c6f0ff, #a7cae4);
+                box-shadow:  50px 50px 100px #b7defa,
+                -50px -50px 100px #bbe2ff;
+            }
+            .btn
+            {
+                font-size: 22px;
+                font-weight: 650;
+            }
+            .plus
+            {
+                height: 110px;
+            }
+            .one,.two,.three
+            {
+                position: relative;
+                top: -55px;
+            }
+            .equal
+            {
+                top:-5px;
+                position: relative;
+                height: 85px;
+            }
+            .zero,.dot
+            {
+                position: relative;
+                top:-110px;
+            }
+            .zero
+            {
+                width: 145px !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <div class="row">
+                <div class="col-2 frame rounded-4 justify-content-start d-flex flex-column">
+                    <div class="col-12 my-4">
+                        <input class=" form-check-reverse bg-transparent form-control fs-2 form-text text-white" disabled readonly>
+                    </div>
+                    <div class="row d-flex justify-content-evenly" id="first">
+                        <div class="col-2">
+                            <button class="btn" id="ac">Ac</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn" id="del">del</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn" id="/">/</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn" id="*">*</button>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-evenly my-4" id="first">
+                        <div class="col-2">
+                            <button class="btn" id="7">7</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn" id="8">8</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn" id="9">9</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn" id="-">-</button>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-evenly" id="first">
+                        <div class="col-2">
+                            <button class="btn" id="4">4</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn" id="5">5</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn" id="6">6</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn plus" id="+">+</button>
+                        </div> 
+                    </div>
+                    <div class="row d-flex justify-content-evenly my-4" id="first">
+                        <div class="col-2">
+                            <button class="btn one" id="1">1</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn two" id="2">2</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn three" id="3">3</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn equal" id="=">=</button>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-evenly my-4" id="first">
+                        <div class="col-5">
+                            <button class="btn one zero" id="0">0</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn three dot" id=".">.</button>
+                        </div>
+                        <div class="col-2">
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </main>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            let btns=document.querySelectorAll("button");
+            let input=document.querySelector("input")
+            btns.forEach((btn)=>
+                btn.addEventListener("click",(event)=>
+                    {
+                        let ch=event.target.id;
+                        if(ch=='ac')
+                        {
+                            input.value="";
+                        }
+                        else if(ch=='=')
+                        {
+                            input.value=eval(input.value).toFixed(2);
+                        }
+                        else
+                        {
+                        input.value+=ch;
+                        }
+                    }
+                )
+            );
+        </script>
+    </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JavaScript-32</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      a:hover {
+        cursor: pointer;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+
+  <body style="background-color: rgba(0, 255, 255, 0.482)">
+    <main>
+      <div
+        class="container-fluid d-flex justify-content-center align-items-center"
+        style="min-height: 100vh"
+      >
+        <div
+          class="row bg-light p-4 rounded-4"
+          style="box-shadow: 7px 7px 7px 7px rgba(0, 0, 0, 0.429)"
+        >
+          <div
+            class="col-12 text-center d-flex flex-column row-gap-4 step1"
+            style="width: 450px"
+          >
+            <div class="fs-4 fw-bold">OTP Verification</div>
+            <div class="fs-5 fw-semibold">Enter Your Email Address</div>
+            <div class="fs-5">
+              You Will Recive An Email With One Time Password
+            </div>
+            <div><input class="form-control" placeholder="Enter mail" /></div>
+            <div class="d-flex">
+              <button class="btn btn-primary my-3 rounded-4 w-100 mx-5">
+                Next <i class="bi bi-arrow-right ps-3"></i>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="col-12 text-center d-flex flex-column row-gap-4 d-none step2"
+            style="width: 450px"
+          >
+            <div class="fs-4 fw-bold">OTP Verification</div>
+            <div class="fs-5 fw-semibold">Enter One-Time Password</div>
+            <div>
+              A One-time Password Has Been Sent To
+              <span id="email">Santhanam@gmail.com</span>
+            </div>
+            <div class="text-success">
+              Enter The 4 Digit Code We Sent You Via Email To Continue
+            </div>
+            <div class="d-flex mx-5"><input class="form-control" /></div>
+            <div>
+              Not Your Email / Didn't Recive The Code ?
+              <a class="text-primary text-decoration-underline ta">Try Again</a>
+            </div>
+            <div class="d-flex">
+              <button class="btn btn-primary my-3 rounded-4 w-100 mx-5">
+                Verify <i class="bi bi-arrow-right ps-3"></i>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="col-12 text-center d-flex flex-column row-gap-4 d-none step3"
+            style="width: 450px"
+          >
+            <div class="fs-3 fw-bold">Congragulation 🎉</div>
+            <div>
+              <img src="Images/tick.png" class="img img-fluid" style="width: 200px" />
+            </div>
+            <div class="fs-4 fw-semibold">Thank You</div>
+            <div class="fs-5">
+              Your OTP Verification Has Been Completed SuccessFully
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      let email = document.querySelector("input");
+      let semail = document.querySelector("#email");
+      let next = document.querySelector("button");
+      let otpval = Math.floor(1000 + Math.random() * 9000);
+      let step1 = document.querySelector(".step1");
+      let step2 = document.querySelector(".step2");
+      let step3 = document.querySelector(".step3");
+      let verify = document.querySelectorAll("button")[1];
+      let Verifyotp = document.querySelectorAll("input")[1];
+      let gb = document.querySelector(".ta");
+      next.addEventListener("click", () => {
+        emailjs.init("KBsswZ8xQPV-mw8BF");
+        temppara = {
+          from_name: "santhanam",
+          otp: otpval,
+          message: "Be Happy",
+          to_mail: email.value,
+        };
+        emailjs.send("service_kxpojpb", "template_pptrf7c", temppara);
+        semail.innerHTML = email.value;
+        step1.classList.add("d-none");
+        step3.classList.add("d-none");
+        step2.classList.remove("d-none");
+      });
+      verify.addEventListener("click", () => {
+        if (Verifyotp.value == otpval) {
+          step2.classList.add("d-none");
+          step1.classList.add("d-none");
+          step3.classList.remove("d-none");
+        } else {
+          alert("The OTP You Have Enter Is Wrong....Please Check Again");
+        }
+      });
+      gb.addEventListener("click", () => {
+        step2.classList.add("d-none");
+        step1.classList.remove("d-none");
+        step3.classList.add("d-none");
+      });
+    </script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    >
+</script>
+      <script
+          src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+          integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+          crossorigin="anonymous">
+
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

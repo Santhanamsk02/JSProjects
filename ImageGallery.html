@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>JavaScript-11</title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <style>
+            @media (max-width:2000px){
+                .image img
+                {
+                    width: 1000px !important;
+                    height: 85%;
+                }
+                .btns
+                {
+                    margin-top: -40px;
+                }
+            }
+            @media (max-width:992px){
+                .image img
+                {
+                    height: auto;
+                    width: 90% !important;
+                }
+                .btns
+                {
+                    margin-top: 20px;
+                }
+            }
+            @media (max-width:768px){
+                .image img
+                {
+                    height: auto;
+
+                    width: 95% !important;
+                }
+                .btns
+                {
+                    margin-top: 20px;
+                }
+            }
+            .inactive
+            {
+                display: none !important;
+            }
+            .pop
+            {
+                backdrop-filter: blur(100px);
+                height: 100vh;
+                width: 100vw;
+                position: fixed;
+                z-index: 5;
+                top:0%;
+            }
+            .btn-close
+            {
+                top:8%;
+                left:85%;
+            }
+        </style>
+    </head>
+
+    <body class="bg-dark d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="pop d-flex flex-column justify-content-center align-items-center bg-gradient">
+            <div class="image align-items-center d-flex justify-content-center">
+                <img class="img-fluid " src="GalleryImages/1">
+            </div>
+            <div class="btns">
+                <button class="btn btn-outline-primary mx-5 pre">Previous</button>
+                <button class="btn btn-outline-primary mx-5 next">Next</button>
+            </div>
+            <button class="btn btn-close position-absolute bg-danger p-2"></button>
+        </div>
+        <main class=" container-fluid m-md-5 m-2 my-5">
+            <div class="row g-md-5 g-4 d-flex justify-content-center align-items-center">
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/1" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/2.jpg" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/3.webp" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/4.jpg" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/5.webp" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/6.jpg" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/7.jpeg" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/8.jpg" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/9.jpg" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/10.avif" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/11.jpeg" alt="" class=" img-fluid"></div>
+                <div class="col-xl-3 col-lg-4 col-md-5 col-6"><img src="GalleryImages/12.jpeg" alt="" class=" img-fluid"></div>
+            </div>
+        </main>
+        
+        <script>
+            let images=document.querySelectorAll(".col-6 img")
+            let pop=document.querySelector(".pop")
+            let inimage=document.querySelector(".image img")
+            let prebtn=document.querySelector(".pre")
+            let nextbtn=document.querySelector(".next")
+            let cindex=0;            
+            document.querySelector(".btn-close").addEventListener("click",()=>
+            {
+                pop.classList.add("inactive")
+            })
+
+            pop.classList.add("inactive")
+            images.forEach((img,index)=>
+            {
+                img.addEventListener("click",()=>
+                {
+                    cindex=index
+                    inimage.src=images[index].src
+                    pop.classList.remove("inactive")
+                })
+            })
+            prebtn.addEventListener("click",()=>{
+                cindex=cindex==0?11:cindex=cindex-1;
+                inimage.src=images[cindex].src
+            }
+            )
+            nextbtn.addEventListener("click",()=>{
+                cindex=cindex==11?0:cindex=cindex+1;
+                inimage.src=images[cindex].src
+            }
+            )
+        </script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

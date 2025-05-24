@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>JavaScript-33</title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <style>
+            @keyframes an
+            {
+                from
+                {
+                    transform: scale(0);
+                    opacity: 0.2;
+                    filter: blur(5px);
+                }
+                to
+                {
+                    transform: scale(1);
+                    opacity:1;
+                    filter: blur(0px);
+                }
+            }
+            .anime
+            {
+                animation: an;
+                animation-timeline: view();
+                animation-range: entry 0% cover 60%;
+            }
+            .loader {
+    width: fit-content;
+    font-weight: bold;
+    font-family: monospace;
+    white-space: pre;
+    font-size: 30px;
+    line-height: 1.2em;
+    height:1.2em;
+    overflow: hidden;
+  }
+  .loader:before {
+    content:"Loading...\A⌰oading...\A⌰⍜ading...\A⌰⍜⏃ding...\A⌰⍜⏃⎅ing...\A⌰⍜⏃⎅⟟ng...\A⌰⍜⏃⎅⟟⋏g...\A⌰⍜⏃⎅⟟⋏☌...\A⌰⍜⏃⎅⟟⋏☌⟒..\A⌰⍜⏃⎅⟟⋏☌⟒⏁.\A⌰⍜⏃⎅⟟⋏☌⟒⏁⋔"; 
+    white-space: pre;
+    display: inline-block;
+    animation: l39 1s infinite steps(11) alternate;
+  }
+  
+  @keyframes l39 {
+    100%{transform: translateY(-100%)}
+  }
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <div class="container-fluid" style="min-height: 100vh;">
+                <div class="row d-flex justify-content-between mx-0 mx-md-5 mt-3 row-gap-3">
+                    <div class=" col-md-2 col-12">News API</div>
+                    <div class="col-md-4 col-12 d-flex">
+                        <input class=" form-control me-5" placeholder="Search News">
+                        <button class=" btn btn-primary px-4">Search</button>
+                    </div>
+                </div>
+               <div class="row d-flex justify-content-center mt-5 row-gap-4">
+                    <div class="col-md-2 col-3"><button class=" btn btn-primary px-4">Sports</button></div>
+                    <div class="col-md-2 col-3"><button class=" btn btn-primary px-4">Political</button></div>
+                    <div class="col-md-2 col-3"><button class=" btn btn-primary px-4">Business</button></div>
+                    <div class="col-md-2 col-3"><button class=" btn btn-primary px-4">Science</button></div>
+                    <div class="col-md-2 col-3"><button class=" btn btn-primary px-4">Technology</button></div>
+               </div>
+               <div class="row my-5 d-flex column-gap-5 justify-content-center row-gap-4 mc">
+                </div>
+                <div class="row d-flex justify-content-center my-5">
+                    <div class="loader d-none my-5"></div>
+            </div>
+                <div class="row d-flex justify-content-center lm d-none">
+                    <div class="col-3 d-flex justify-content-center">
+                        <button class=" btn btn-primary px-5 mb-3">Load More</button>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center my-4 pg d-none">
+                    <div class="col-12  d-flex justify-content-center">
+                        <nav aria-label="Page navigation ">
+                            <ul class="pagination">
+                              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                              <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                              <li class="page-item"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item"><a class="page-link" href="#">4</a></li>
+                              <li class="page-item"><a class="page-link" href="#">5</a></li>
+                              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                          </nav>
+                    </div>
+                    
+                </div>                    
+               </div>
+            </div>
+        </main>
+        <script>
+            let key="d1d4dfb1b41142809452e8ebe76c642b";
+            let ncount=30;
+            let pno=1;
+            let cat="india"
+            let mc=document.querySelector(".mc")
+            let lm=document.querySelector(".lm")
+            let pg=document.querySelector(".pg")
+            let lmbtn=document.querySelector(".lm button")
+            let loader=document.querySelector(".loader")
+            let cats=document.querySelectorAll(".col-3 button")
+            let input=document.querySelector("input")
+            let Search=document.querySelector("button")
+            let go=document.querySelectorAll(".pg a")
+            let limit=10;
+            function getnews()
+            {
+                mc.innerHTML=""
+                loader.classList.remove("d-none")
+                mc.classList.add("d-none")
+                pg.classList.add("d-none")
+                fetch(`https://newsapi.org/v2/everything?q=${cat}&pageSize=${ncount}&page=${pno}&apiKey=${key}`).then((res)=>res.json())
+                .then((data)=>{
+                    let arti=data.articles;
+                    console.log(arti)
+                    let l=0
+                    console.log(limit)
+                    for(i=0;i<arti.length;i++)
+                    {
+                        if(arti[i].description==null || arti[i].urlToImage==null || arti[i].description.length<130 || arti[i].description.length>180)
+                        {
+                            continue
+                        }
+                        if(limit>l)
+                        {
+                            l++;
+                            console.log(l)
+                            let div=document.createElement("div")
+                        div.classList.add("col-md-3")
+                        div.classList.add("col-10")
+                        div.classList.add("p-0")
+                        div.innerHTML=`
+                        <div class="card p-0 d-flex flex-column row-gap-4 w-100 anime">
+                        <img src="${arti[i].urlToImage}" class=" img img-fluid card-img">
+                        <div class=" fs-5 fw-bold px-2">${arti[i].title}</div>
+                        <div class=" px-2">${arti[i].description}</div>
+                        <div class=" px-2 mb-4"><a href="${arti[i].url}" targe="_blank"><button class=" btn btn-primary px-4">Read More</button></a></div>
+                        </div>
+                        `
+                        mc.append(div)
+                        }
+                        
+                        
+                    }
+
+                    setTimeout(()=>{
+                        loader.classList.add("d-none")
+                        mc.classList.remove("d-none")
+                        lm.classList.remove("d-none")
+                        pg.classList.remove("d-none")
+                    },2000);
+                    
+                })
+            }
+            getnews();
+            go.forEach((gg)=>{
+                gg.addEventListener("click",(e)=>{
+                    e.preventDefault();
+                    
+                    if(e.target.innerHTML=="Previous")
+                    {
+                        if(!(pno==1))
+                        {
+                            pno--;
+                        }
+                        else
+                        {
+                            pno=1;
+                        }
+                        getnews();
+                    }
+                    else if(e.target.innerHTML=="Next")
+                    {
+                        pno++;
+                        getnews();
+                    }
+                    else
+                    {
+                        pno=e.target.innerHTML;
+                        getnews();
+                        go.forEach((gg)=>{
+                            gg.classList.remove("active");
+                        })
+                        e.target.classList.add("active")
+                    }
+                })
+            })
+            lmbtn.addEventListener("click",()=>{
+                ncount+=30;
+                limit+=5;
+                getnews();
+            })
+            cats.forEach((ct)=>{
+                ct.addEventListener("click",(e)=>{
+                    cat=e.target.innerHTML;
+                    getnews();
+                })
+            })
+            Search.addEventListener("click",()=>{
+                cat=input.value;
+                getnews();
+            })
+
+            
+        </script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
